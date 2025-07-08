@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import Optional
 import openai
 import os
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,22 +21,22 @@ class Proyecto(BaseModel):
     grupo: str
     eje: str
     objetivo_general: str
-    objetivo_esp_1: str
-    objetivo_esp_2: str
-    objetivo_esp_3: str
-    justificacion: str
-    descripcion: str
-    duracion: str
-    fechas: str
-    presupuesto_transporte: str
-    presupuesto_materiales: str
-    presupuesto_refrigerios: str
-    presupuesto_total: str
-    poblacion: str
-    finalidad: str
-    indicador_1: str
-    indicador_2: str
-    indicador_3: str
+    objetivo_esp_1: Optional[str] = None
+    objetivo_esp_2: Optional[str] = None
+    objetivo_esp_3: Optional[str] = None
+    justificacion: Optional[str] = None
+    descripcion: Optional[str] = None
+    duracion: Optional[str] = None
+    fechas: Optional[str] = None
+    presupuesto_transporte: Optional[str] = None
+    presupuesto_materiales: Optional[str] = None
+    presupuesto_refrigerios: Optional[str] = None
+    presupuesto_total: Optional[str] = None
+    poblacion: Optional[str] = None
+    finalidad: Optional[str] = None
+    indicador_1: Optional[str] = None
+    indicador_2: Optional[str] = None
+    indicador_3: Optional[str] = None
 
 @app.post("/generar_proyecto")
 def generar(data: Proyecto):
@@ -47,23 +48,23 @@ Grupo: {data.grupo}
 Eje: {data.eje}
 Objetivo General: {data.objetivo_general}
 Objetivos Específicos:
-- {data.objetivo_esp_1}
-- {data.objetivo_esp_2}
-- {data.objetivo_esp_3}
-Justificación: {data.justificacion}
-Descripción: {data.descripcion}
-Duración: {data.duracion} ({data.fechas})
+- {data.objetivo_esp_1 or ""}
+- {data.objetivo_esp_2 or ""}
+- {data.objetivo_esp_3 or ""}
+Justificación: {data.justificacion or ""}
+Descripción: {data.descripcion or ""}
+Duración: {data.duracion or ""} ({data.fechas or ""})
 Presupuesto:
-- Transporte: {data.presupuesto_transporte}
-- Materiales: {data.presupuesto_materiales}
-- Refrigerios: {data.presupuesto_refrigerios}
-- Total: {data.presupuesto_total}
-Población objetivo: {data.poblacion}
-Finalidad: {data.finalidad}
+- Transporte: {data.presupuesto_transporte or ""}
+- Materiales: {data.presupuesto_materiales or ""}
+- Refrigerios: {data.presupuesto_refrigerios or ""}
+- Total: {data.presupuesto_total or ""}
+Población objetivo: {data.poblacion or ""}
+Finalidad: {data.finalidad or ""}
 Indicadores de éxito:
-- {data.indicador_1}
-- {data.indicador_2}
-- {data.indicador_3}
+- {data.indicador_1 or ""}
+- {data.indicador_2 or ""}
+- {data.indicador_3 or ""}
 
 Usa lenguaje scout, claro, estructurado y motivador.
 """
