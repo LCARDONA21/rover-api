@@ -13,10 +13,11 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
-# Permitir CORS para todos los orígenes
+# CORS: permitir solo tu frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://lcardona21.github.io"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -47,7 +48,6 @@ class Proyecto(BaseModel):
 # Generar proyecto con IA
 @app.post("/generar_proyecto")
 async def generar(data: Proyecto):
-    # Construir prompt
     prompt = f"""
 Redacta un proyecto scout con los siguientes datos:
 
@@ -76,7 +76,6 @@ Indicadores de éxito:
 
 Usa lenguaje scout, claro, estructurado y motivador.
 """
-    # Llamada a la API de OpenAI
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
@@ -92,15 +91,12 @@ Usa lenguaje scout, claro, estructurado y motivador.
 async def descargar_docx(request: Request):
     payload = await request.json()
     texto = payload.get("proyecto", "")
-    # Crear documento Word
     doc = Document()
     for linea in texto.split("\n"):
         doc.add_paragraph(linea)
-    # Guardar en archivo temporal
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
     doc.save(tmp.name)
     tmp.close()
-    # Retornar como FileResponse
     return FileResponse(
         path=tmp.name,
         filename="Proyecto_Rover.docx",
