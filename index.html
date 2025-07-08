@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador Rover Scout Interactivo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff1f2;
+      margin: 2rem;
+      color: #1e293b;
+    }
+    header {
+      background: linear-gradient(to right, #991b1b, #b91c1c);
+      color: white;
+      padding: 1rem 1rem 2.5rem;
+      text-align: center;
+      border-radius: 12px;
+      position: relative;
+    }
+    header img {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      height: 60px;
+    }
+    header::after {
+      content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Horquilla_rover.png/64px-Horquilla_rover.png');
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    header::before {
+      content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Buho_Rover.png/64px-Buho_Rover.png');
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+    }
+    header .lema {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 1rem;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fecaca;
+    }
+    .form-box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #b91c1c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #resultado {
+      margin-top: 2rem;
+      background-color: #fff;
+      padding: 1rem;
+      border-left: 5px solid #b91c1c;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #991b1b;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://scout.org/sites/default/files/styles/medium/public/2022-05/LOGO%20SCOUTS%20COLOMBIA.png" alt="Logo Scouts de Colombia">
+    <h1>Generador de Proyectos Rover Scout</h1>
+    <div class="lema">Rover: Servir</div>
+  </header>
+
+  <div class="form-box">
+    <form id="wizard-form">
+      <label id="question-label" for="input">¿Cuál es el título del proyecto?</label>
+      <input type="text" id="input" required>
+      <button type="submit">Continuar</button>
+    </form>
+  </div>
+
+  <div id="resultado"></div>
+
+  <footer>
+    Desarrollado por Comisión Rover Nacional – Liz Esmeralda Cardona
+  </footer>
+
+  <script>
+    const preguntas = [
+      ['titulo', '¿Cuál es el título del proyecto?'],
+      ['grupo', '¿A qué Grupo Scout pertenece el proyecto?'],
+      ['eje', '¿A qué eje pertenece (Empresa, Enlace, Servicio, etc.)?'],
+      ['objetivo_general', '¿Cuál es el objetivo general del proyecto?'],
+      ['objetivo_esp_1', 'Objetivo específico 1:'],
+      ['objetivo_esp_2', 'Objetivo específico 2:'],
+      ['objetivo_esp_3', 'Objetivo específico 3:'],
+      ['justificacion', '¿Cuál es la justificación del proyecto?'],
+      ['descripcion', 'Describe el proyecto en detalle:'],
+      ['duracion', '¿Cuál es la duración estimada?'],
+      ['fechas', '¿Qué fechas están previstas?'],
+      ['presupuesto_transporte', '¿Presupuesto para transporte?'],
+      ['presupuesto_materiales', '¿Presupuesto para materiales?'],
+      ['presupuesto_refrigerios', '¿Presupuesto para refrigerios?'],
+      ['presupuesto_total', '¿Presupuesto total estimado?'],
+      ['poblacion', '¿A quién va dirigido el proyecto (población)?'],
+      ['finalidad', '¿Cuál es la finalidad del proyecto?'],
+      ['indicador_1', 'Indicador 1 de seguimiento:'],
+      ['indicador_2', 'Indicador 2 de seguimiento:'],
+      ['indicador_3', 'Indicador 3 de seguimiento:']
+    ];
+
+    const form = document.getElementById('wizard-form');
+    const input = document.getElementById('input');
+    const label = document.getElementById('question-label');
+    const resultado = document.getElementById('resultado');
+
+    let paso = 0;
+    const respuestas = { };
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const clave = preguntas[paso][0];
+      const valor = input.value.trim();
+      respuestas[clave] = valor;
+      paso++;
+      input.value = "";
+
+      if (paso < preguntas.length) {
+        label.textContent = preguntas[paso][1];
+      } else {
+        label.textContent = "Generando proyecto...";
+        input.style.display = "none";
+        this.querySelector('button').style.display = "none";
+
+        const response = await fetch("https://proyecto-rover-api.onrender.com/generar_proyecto", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(respuestas)
+        });
+
+        const result = await response.json();
+        resultado.innerText = result.proyecto;
+      }
+    });
+  </script>
+</body>
+</html>
