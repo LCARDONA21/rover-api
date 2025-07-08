@@ -94,15 +94,14 @@
         });
 
         const result = await response.json();
-        const texto = result.proyecto;
+        resultado.innerText = result.proyecto;
 
-        if (texto && texto.trim() !== "") {
-          resultado.innerText = texto;
-
+        if (resultado.innerText.trim() !== "") {
           const buttonDOCX = document.createElement("button");
           buttonDOCX.innerText = "📄 Descargar en Word";
           buttonDOCX.style.marginTop = '1rem';
           buttonDOCX.onclick = async () => {
+            const texto = resultado.innerText;
             const resp = await fetch("https://rover-api-fixed.onrender.com/descargar_docx", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
