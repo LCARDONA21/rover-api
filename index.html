@@ -94,30 +94,30 @@
         });
 
         const result = await response.json();
-        const texto = result.proyecto ?? result.content ?? "❌ No se recibió contenido.";
-        resultado.innerText = texto;
+        const texto = result.proyecto;
 
-        const buttonDOCX = document.createElement("button");
-        buttonDOCX.innerText = "📄 Descargar en Word";
-        buttonDOCX.style.marginTop = '1rem';
-        buttonDOCX.onclick = async () => {
-          if (!texto) {
-            alert("❗ No hay texto generado para descargar");
-            return;
-          }
+        if (texto && texto.trim() !== "") {
+          resultado.innerText = texto;
 
-          const resp = await fetch("https://rover-api-fixed.onrender.com/descargar_docx", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ proyecto: texto })
-          });
-          const blob = await resp.blob();
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "Proyecto_Rover.docx";
-          link.click();
-        };
-        resultado.appendChild(buttonDOCX);
+          const buttonDOCX = document.createElement("button");
+          buttonDOCX.innerText = "📄 Descargar en Word";
+          buttonDOCX.style.marginTop = '1rem';
+          buttonDOCX.onclick = async () => {
+            const resp = await fetch("https://rover-api-fixed.onrender.com/descargar_docx", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ proyecto: texto })
+            });
+            const blob = await resp.blob();
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "Proyecto_Rover.docx";
+            link.click();
+          };
+          resultado.appendChild(buttonDOCX);
+        } else {
+          resultado.innerText = "⚠️ No se pudo generar el proyecto. Intenta de nuevo.";
+        }
       }
     });
   </script>
