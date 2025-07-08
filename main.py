@@ -8,12 +8,10 @@ from fastapi.responses import FileResponse, JSONResponse
 from docx import Document
 import tempfile
 
-# Configurar clave de OpenAI desde variable de entorno
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
-# CORS para GitHub Pages
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://lcardona21.github.io"],
