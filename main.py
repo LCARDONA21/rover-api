@@ -13,7 +13,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
-# CORS: permitir solo tu frontend
+# CORS para GitHub Pages
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://lcardona21.github.io"],
@@ -22,7 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Modelo de datos para el proyecto
 class Proyecto(BaseModel):
     titulo: str
     grupo: str
@@ -45,7 +44,6 @@ class Proyecto(BaseModel):
     indicador_2: Optional[str] = None
     indicador_3: Optional[str] = None
 
-# Generar proyecto con IA
 @app.post("/generar_proyecto")
 async def generar(data: Proyecto):
     prompt = f"""
@@ -86,14 +84,23 @@ Usa lenguaje scout, claro, estructurado y motivador.
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-# Endpoint para descargar DOCX generado en servidor
 @app.post("/descargar_docx")
 async def descargar_docx(request: Request):
     payload = await request.json()
     texto = payload.get("proyecto", "")
     doc = Document()
-    for linea in texto.split("\n"):
-        doc.add_paragraph(linea)
+
+    for bloque in texto.strip().split("\n\n"):
+        if ":" in bloque:
+            titulo, contenido = bloque.split(":", 1)
+            table = doc.add_table(rows=2, cols=1)
+            table.style = 'Table Grid'
+            table.cell(0, 0).text = titulo.strip()
+            table.cell(1, 0).text = contenido.strip()
+            doc.add_paragraph()
+        else:
+            doc.add_paragraph(bloque.strip())
+
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
     doc.save(tmp.name)
     tmp.close()
