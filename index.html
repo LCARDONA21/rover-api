@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Generador Rover Scout Interactivo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.7.0/docx.umd.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -26,7 +27,7 @@
       height: 60px;
     }
     header::after {
-      content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Horquilla_rover.png/64px-Horquilla_rover.png');
+      content: url('https://upload.wikedia.org/wikipedia/commons/thumb/b/b8/Horquilla_rover.png/64px-Horquilla_rover.png');
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -115,26 +116,26 @@
 
   <script>
     const preguntas = [
-      ['titulo', '¿Cuál es el título del proyecto?\nEj: “Juntos por el río”, “Rover Market”, “Jornada de Lectura Infantil”'],
-      ['grupo', '¿A qué Grupo Scout pertenece el proyecto?\nEj: Grupo 15 Pioneros – Pereira'],
-      ['eje', '¿A qué eje pertenece tu proyecto?\n\n📌 Empresa: iniciativas productivas o autogestión.\n🤝 Servicio: impacto social o comunitario.\n🔗 Enlace: articulación con otros grupos o ramas.\n🧭 Transversal: apoyo a la formación o gestión interna.'],
-      ['objetivo_general', '¿Cuál es el objetivo general del proyecto?\nEj: Fortalecer el espíritu de servicio mediante una campaña ambiental comunitaria.'],
-      ['objetivo_esp_1', 'Objetivo específico 1:\nMetas concretas. Ej: Capacitar a los rovers en reciclaje.'],
-      ['objetivo_esp_2', 'Objetivo específico 2:\nEj: Realizar al menos 2 jornadas.'],
-      ['objetivo_esp_3', 'Objetivo específico 3:\nEj: Sensibilizar a 50 personas sobre reciclaje.'],
-      ['justificacion', '¿Por qué es importante este proyecto?\nExplica la necesidad, problema o motivación que impulsa la acción.'],
-      ['descripcion', 'Describe el proyecto en detalle:\n¿Quién lo hace? ¿Qué se hará? ¿Cómo? ¿Dónde? ¿Con qué recursos?'],
-      ['duracion', '¿Cuál es la duración estimada?\nEj: 3 días, 1 mes, 6 semanas.'],
-      ['fechas', '¿Qué fechas están previstas?\nEj: Del 10 al 20 de septiembre de 2025.'],
-      ['presupuesto_transporte', '¿Presupuesto para transporte?\nMonto aproximado. Ej: 100.000 COP'],
-      ['presupuesto_materiales', '¿Presupuesto para materiales?\nEj: 80.000 COP'],
-      ['presupuesto_refrigerios', '¿Presupuesto para refrigerios?\nEj: 50.000 COP'],
-      ['presupuesto_total', '¿Presupuesto total estimado?\nSuma de todos los anteriores. Ej: 230.000 COP'],
-      ['poblacion', '¿A quién va dirigido el proyecto?\nEj: Niños del barrio La Granja, ancianos del hogar Santa Rita, rovers del distrito.'],
-      ['finalidad', '¿Qué impacto positivo se espera lograr?\nEj: Fomentar el liderazgo rover, generar conciencia ambiental, fortalecer la unión.'],
-      ['indicador_1', 'Indicador 1 de seguimiento:\nEj: Número de beneficiarios, % de asistencia, ejecución presupuestal.'],
-      ['indicador_2', 'Indicador 2 de seguimiento:\nEj: Nivel de satisfacción, participación, cumplimiento de metas.'],
-      ['indicador_3', 'Indicador 3 de seguimiento:\nEj: Impacto comunitario, replicabilidad, continuidad del proyecto.']
+      ['titulo', '¿Cuál es el título del proyecto? Ej: “Juntos por el río”, “Rover Market”'],
+      ['grupo', '¿A qué Grupo Scout pertenece el proyecto? Ej: Grupo 15 Pioneros – Pereira'],
+      ['eje', '¿A qué eje pertenece tu proyecto? Empresa: productivo / Servicio: social / Enlace: con otros / Transversal: interno'],
+      ['objetivo_general', '¿Cuál es el objetivo general? Ej: Fortalecer el espíritu de servicio mediante una campaña ambiental.'],
+      ['objetivo_esp_1', 'Objetivo específico 1: Ej: Capacitar a los rovers en reciclaje.'],
+      ['objetivo_esp_2', 'Objetivo específico 2: Ej: Realizar al menos 2 jornadas.'],
+      ['objetivo_esp_3', 'Objetivo específico 3: Ej: Sensibilizar a 50 personas.'],
+      ['justificacion', '¿Por qué es importante este proyecto? ¿Qué problema atiende?'],
+      ['descripcion', 'Describe el proyecto completo: actividades, lugar, responsables.'],
+      ['duracion', '¿Cuánto dura el proyecto? Ej: 3 días, 1 mes'],
+      ['fechas', '¿Cuándo se realizará? Ej: Del 10 al 20 de septiembre de 2025'],
+      ['presupuesto_transporte', '¿Presupuesto para transporte? Ej: 100.000 COP'],
+      ['presupuesto_materiales', '¿Presupuesto para materiales? Ej: 80.000 COP'],
+      ['presupuesto_refrigerios', '¿Presupuesto para refrigerios? Ej: 50.000 COP'],
+      ['presupuesto_total', '¿Presupuesto total estimado? Ej: 230.000 COP'],
+      ['poblacion', '¿A quién va dirigido el proyecto? Ej: Niños, rovers, comunidad.'],
+      ['finalidad', '¿Qué impacto se espera? Ej: Fomentar liderazgo, mejorar entorno.'],
+      ['indicador_1', 'Indicador 1: Ej: % de asistencia, número de beneficiarios'],
+      ['indicador_2', 'Indicador 2: Ej: nivel de satisfacción, ejecución del presupuesto'],
+      ['indicador_3', 'Indicador 3: Ej: continuidad, replicabilidad']
     ];
 
     const form = document.getElementById('wizard-form');
@@ -162,14 +163,30 @@
 
         const response = await fetch("https://proyecto-rover-api.onrender.com/generar_proyecto", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(respuestas)
         });
 
         const result = await response.json();
         resultado.innerText = result.proyecto;
+
+        const buttonDOCX = document.createElement("button");
+        buttonDOCX.innerText = "📄 Descargar en Word";
+        buttonDOCX.style.marginTop = '1rem';
+        buttonDOCX.onclick = async () => {
+          const { Document, Packer, Paragraph, TextRun } = window.docx;
+          const doc = new Document({
+            sections: [{
+              children: [new Paragraph({ children: [new TextRun(result.proyecto)] })]
+            }]
+          });
+          const blob = await Packer.toBlob(doc);
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = "Proyecto_Rover.docx";
+          link.click();
+        };
+        resultado.appendChild(buttonDOCX);
       }
     });
   </script>
