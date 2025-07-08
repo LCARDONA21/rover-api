@@ -94,13 +94,13 @@
         });
 
         const result = await response.json();
-        resultado.innerText = result.proyecto;
+        const texto = result.proyecto ?? result.content ?? "❌ No se recibió contenido.";
+        resultado.innerText = texto;
 
         const buttonDOCX = document.createElement("button");
         buttonDOCX.innerText = "📄 Descargar en Word";
         buttonDOCX.style.marginTop = '1rem';
         buttonDOCX.onclick = async () => {
-          const texto = resultado.innerText;
           if (!texto) {
             alert("❗ No hay texto generado para descargar");
             return;
