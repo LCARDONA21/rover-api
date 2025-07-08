@@ -4,105 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Generador Rover Scout Interactivo</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.7.0/docx.umd.min.js"></script>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff1f2;
-      margin: 2rem;
-      color: #1e293b;
-    }
-    header {
-      background: linear-gradient(to right, #991b1b, #b91c1c);
-      color: white;
-      padding: 1rem 1rem 2.5rem;
-      text-align: center;
-      border-radius: 12px;
-      position: relative;
-    }
-    header img {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      height: 60px;
-    }
-    header::after {
-      content: url('https://upload.wikedia.org/wikipedia/commons/thumb/b/b8/Horquilla_rover.png/64px-Horquilla_rover.png');
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
-    header::before {
-      content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Buho_Rover.png/64px-Buho_Rover.png');
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-    }
-    header .lema {
-      position: absolute;
-      bottom: 0.5rem;
-      right: 1rem;
-      font-style: italic;
-      font-weight: bold;
-      font-size: 1rem;
-      color: #fecaca;
-    }
-    .form-box {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: 2rem auto;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #fca5a5;
-      border-radius: 8px;
-    }
-    button {
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
-      background-color: #b91c1c;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #resultado {
-      margin-top: 2rem;
-      background-color: #fff;
-      padding: 1rem;
-      border-left: 5px solid #b91c1c;
-      border-radius: 8px;
-      white-space: pre-wrap;
-    }
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #991b1b;
-      font-weight: bold;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background-color: #fff1f2; margin: 2rem; color: #1e293b; }
+    header { background: linear-gradient(to right, #991b1b, #b91c1c); color: white; padding: 1rem 1rem 2.5rem; text-align: center; border-radius: 12px; position: relative; }
+    header img { position: absolute; top: 1rem; left: 1rem; height: 60px; }
+    header::after { content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Horquilla_rover.png/64px-Horquilla_rover.png'); position: absolute; top: 1rem; right: 1rem; }
+    header::before { content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Buho_Rover.png/64px-Buho_Rover.png'); position: absolute; bottom: 1rem; left: 1rem; }
+    header .lema { position: absolute; bottom: 0.5rem; right: 1rem; font-style: italic; font-weight: bold; font-size: 1rem; color: #fecaca; }
+    .form-box { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); max-width: 600px; margin: 2rem auto; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 8px; }
+    button { margin-top: 1.5rem; padding: 0.75rem 1.5rem; background-color: #b91c1c; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    #resultado { margin-top: 2rem; background-color: #fff; padding: 1rem; border-left: 5px solid #b91c1c; border-radius: 8px; white-space: pre-wrap; }
+    footer { text-align: center; margin-top: 3rem; font-size: 0.9rem; color: #991b1b; font-weight: bold; }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://scout.org/sites/default/files/styles/medium/public/2022-05/LOGO%20SCOUTS%20COLOMBIA.png" alt="Logo Scouts de Colombia">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Logo_Scouts_Colombia.png" alt="Logo Scouts de Colombia">
     <h1>Generador de Proyectos Rover Scout</h1>
     <div class="lema">Rover: Servir</div>
   </header>
 
   <div class="form-box">
     <form id="wizard-form">
-      <label id="question-label" for="input">Pregunta...</label>
+      <label id="question-label" for="input">¿Cuál es el título del proyecto? Ej: “Juntos por el río”, “Rover Market”</label>
       <input type="text" id="input" required>
       <button type="submit">Continuar</button>
     </form>
@@ -118,12 +44,12 @@
     const preguntas = [
       ['titulo', '¿Cuál es el título del proyecto? Ej: “Juntos por el río”, “Rover Market”'],
       ['grupo', '¿A qué Grupo Scout pertenece el proyecto? Ej: Grupo 15 Pioneros – Pereira'],
-      ['eje', '¿A qué eje pertenece tu proyecto? Empresa: productivo / Servicio: social / Enlace: con otros / Transversal: interno'],
+      ['eje', '¿A qué eje pertenece tu proyecto?\n\n🧭 Empresa: iniciativas de emprendimiento o sostenibilidad.\n🌍 Servicio: impacto social y comunitario.\n✈️ Viaje y Enlace: actividades de conexión con otros grupos, regiones o culturas.\n⚙️ Transversal: formación, técnicas scout y apoyo al desarrollo del Clan.'],
       ['objetivo_general', '¿Cuál es el objetivo general? Ej: Fortalecer el espíritu de servicio mediante una campaña ambiental.'],
       ['objetivo_esp_1', 'Objetivo específico 1: Ej: Capacitar a los rovers en reciclaje.'],
       ['objetivo_esp_2', 'Objetivo específico 2: Ej: Realizar al menos 2 jornadas.'],
       ['objetivo_esp_3', 'Objetivo específico 3: Ej: Sensibilizar a 50 personas.'],
-      ['justificacion', '¿Por qué es importante este proyecto? ¿Qué problema atiende?'],
+      ['justificacion', '¿Por qué es importante este proyecto?\nExplica la necesidad, problema o motivación.'],
       ['descripcion', 'Describe el proyecto completo: actividades, lugar, responsables.'],
       ['duracion', '¿Cuánto dura el proyecto? Ej: 3 días, 1 mes'],
       ['fechas', '¿Cuándo se realizará? Ej: Del 10 al 20 de septiembre de 2025'],
@@ -131,7 +57,7 @@
       ['presupuesto_materiales', '¿Presupuesto para materiales? Ej: 80.000 COP'],
       ['presupuesto_refrigerios', '¿Presupuesto para refrigerios? Ej: 50.000 COP'],
       ['presupuesto_total', '¿Presupuesto total estimado? Ej: 230.000 COP'],
-      ['poblacion', '¿A quién va dirigido el proyecto? Ej: Niños, rovers, comunidad.'],
+      ['poblacion', '¿A quién va dirigido el proyecto? Ej: Niños del barrio, rovers, comunidad.'],
       ['finalidad', '¿Qué impacto se espera? Ej: Fomentar liderazgo, mejorar entorno.'],
       ['indicador_1', 'Indicador 1: Ej: % de asistencia, número de beneficiarios'],
       ['indicador_2', 'Indicador 2: Ej: nivel de satisfacción, ejecución del presupuesto'],
@@ -174,14 +100,19 @@
         buttonDOCX.innerText = "📄 Descargar en Word";
         buttonDOCX.style.marginTop = '1rem';
         buttonDOCX.onclick = async () => {
-          const { Document, Packer, Paragraph, TextRun } = window.docx;
-          const doc = new Document({
-            sections: [{
-              children: [new Paragraph({ children: [new TextRun(result.proyecto)] })]
-            }]
+          const texto = resultado.innerText;
+          if (!texto) {
+            alert("❗ No hay texto generado para descargar");
+            return;
+          }
+
+          const resp = await fetch("https://proyecto-rover-api.onrender.com/descargar_docx", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ proyecto: texto })
           });
-          const blob = await Packer.toBlob(doc);
-          const link = document.createElement('a');
+          const blob = await resp.blob();
+          const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);
           link.download = "Proyecto_Rover.docx";
           link.click();
