@@ -101,7 +101,7 @@
 
   <div class="form-box">
     <form id="wizard-form">
-      <label id="question-label" for="input">¿Cuál es el título del proyecto?</label>
+      <label id="question-label" for="input">Pregunta...</label>
       <input type="text" id="input" required>
       <button type="submit">Continuar</button>
     </form>
@@ -115,26 +115,26 @@
 
   <script>
     const preguntas = [
-      ['titulo', '¿Cuál es el título del proyecto?'],
-      ['grupo', '¿A qué Grupo Scout pertenece el proyecto?'],
-      ['eje', '¿A qué eje pertenece (Empresa, Enlace, Servicio, etc.)?'],
-      ['objetivo_general', '¿Cuál es el objetivo general del proyecto?'],
-      ['objetivo_esp_1', 'Objetivo específico 1:'],
-      ['objetivo_esp_2', 'Objetivo específico 2:'],
-      ['objetivo_esp_3', 'Objetivo específico 3:'],
-      ['justificacion', '¿Cuál es la justificación del proyecto?'],
-      ['descripcion', 'Describe el proyecto en detalle:'],
-      ['duracion', '¿Cuál es la duración estimada?'],
-      ['fechas', '¿Qué fechas están previstas?'],
-      ['presupuesto_transporte', '¿Presupuesto para transporte?'],
-      ['presupuesto_materiales', '¿Presupuesto para materiales?'],
-      ['presupuesto_refrigerios', '¿Presupuesto para refrigerios?'],
-      ['presupuesto_total', '¿Presupuesto total estimado?'],
-      ['poblacion', '¿A quién va dirigido el proyecto (población)?'],
-      ['finalidad', '¿Cuál es la finalidad del proyecto?'],
-      ['indicador_1', 'Indicador 1 de seguimiento:'],
-      ['indicador_2', 'Indicador 2 de seguimiento:'],
-      ['indicador_3', 'Indicador 3 de seguimiento:']
+      ['titulo', '¿Cuál es el título del proyecto?\nEj: “Juntos por el río”, “Rover Market”, “Jornada de Lectura Infantil”'],
+      ['grupo', '¿A qué Grupo Scout pertenece el proyecto?\nEj: Grupo 15 Pioneros – Pereira'],
+      ['eje', '¿A qué eje pertenece tu proyecto?\n\n📌 Empresa: iniciativas productivas o autogestión.\n🤝 Servicio: impacto social o comunitario.\n🔗 Enlace: articulación con otros grupos o ramas.\n🧭 Transversal: apoyo a la formación o gestión interna.'],
+      ['objetivo_general', '¿Cuál es el objetivo general del proyecto?\nEj: Fortalecer el espíritu de servicio mediante una campaña ambiental comunitaria.'],
+      ['objetivo_esp_1', 'Objetivo específico 1:\nMetas concretas. Ej: Capacitar a los rovers en reciclaje.'],
+      ['objetivo_esp_2', 'Objetivo específico 2:\nEj: Realizar al menos 2 jornadas.'],
+      ['objetivo_esp_3', 'Objetivo específico 3:\nEj: Sensibilizar a 50 personas sobre reciclaje.'],
+      ['justificacion', '¿Por qué es importante este proyecto?\nExplica la necesidad, problema o motivación que impulsa la acción.'],
+      ['descripcion', 'Describe el proyecto en detalle:\n¿Quién lo hace? ¿Qué se hará? ¿Cómo? ¿Dónde? ¿Con qué recursos?'],
+      ['duracion', '¿Cuál es la duración estimada?\nEj: 3 días, 1 mes, 6 semanas.'],
+      ['fechas', '¿Qué fechas están previstas?\nEj: Del 10 al 20 de septiembre de 2025.'],
+      ['presupuesto_transporte', '¿Presupuesto para transporte?\nMonto aproximado. Ej: 100.000 COP'],
+      ['presupuesto_materiales', '¿Presupuesto para materiales?\nEj: 80.000 COP'],
+      ['presupuesto_refrigerios', '¿Presupuesto para refrigerios?\nEj: 50.000 COP'],
+      ['presupuesto_total', '¿Presupuesto total estimado?\nSuma de todos los anteriores. Ej: 230.000 COP'],
+      ['poblacion', '¿A quién va dirigido el proyecto?\nEj: Niños del barrio La Granja, ancianos del hogar Santa Rita, rovers del distrito.'],
+      ['finalidad', '¿Qué impacto positivo se espera lograr?\nEj: Fomentar el liderazgo rover, generar conciencia ambiental, fortalecer la unión.'],
+      ['indicador_1', 'Indicador 1 de seguimiento:\nEj: Número de beneficiarios, % de asistencia, ejecución presupuestal.'],
+      ['indicador_2', 'Indicador 2 de seguimiento:\nEj: Nivel de satisfacción, participación, cumplimiento de metas.'],
+      ['indicador_3', 'Indicador 3 de seguimiento:\nEj: Impacto comunitario, replicabilidad, continuidad del proyecto.']
     ];
 
     const form = document.getElementById('wizard-form');
